@@ -1,23 +1,33 @@
-import logo from './logo.svg';
 import './App.css';
+import {useState , useEffect}  from "react";
+import Axios from "axios";
 
 function App() {
+
+  const [data, setData] = useState([]);
+ 
+const fetchAPI = async () => {
+  const response = await Axios.get(
+    "https://api.unsplash.com/photos/?client_id=uqr-0EE5-49f0cQTQEnmvP7RhmFMqc_Smdtgj0EUxMs"
+  );
+  console.log(response.data);
+  const data = await response.data;
+  setData(data);
+};
+
+useEffect(() => {
+  fetchAPI();
+}, []);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+       <h1>API HANDELING GET API  </h1>
+       {data?.map((e) => (
+        <div>
+          <img style={{width:"200px" , height:'200px'}}  src={e?.urls?.raw}/>
+        </div>
+       ))}
+
+    <h1>API HANDELING DELETE  API  </h1>
     </div>
   );
 }
